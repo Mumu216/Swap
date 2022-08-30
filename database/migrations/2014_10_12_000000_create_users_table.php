@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('role')->default(2)->comment('1=Admin , 2=User');
+            $table->string('status')->default(1)->comment('1=Active , 2=Inactive');
             $table->text('image')->nullable();
             $table->rememberToken();
             $table->timestamps();

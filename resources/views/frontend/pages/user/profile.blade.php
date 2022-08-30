@@ -87,23 +87,24 @@
 																</th>
                                                             </tr>
                                                             <tr>
+                                                                <th>Country</th>
+                                                                <th>{{Auth::user()->country}}</th>
+                                                            </tr>
+                                                            {{-- <tr>
                                                                 <th>Profile</th>
                                                                 <th>
-																	@if( Auth::user()->status == 1)
-																		@if( !empty(Auth::user()->district_id))
-																			@if( !empty(Auth::user()->image))
-																				<span class='badge badge-success'>Active</span>
-																			@else
-																				<span class='badge badge-info'>Profile Picture Missing</span>
-																			@endif
-																		@else
-																			<span class='badge badge-info'>Profile Update must</span>
-																		@endif
-																	@else
-																		<span class='badge badge-danger'>Pending</span>
-																	@endif
-																</th>
-                                                            </tr>
+																  @if(Auth::user()->status == 1)
+                                                                    @if(!empty(Auth::user()->image))
+                                                                     <span class="badge badge-info">Active</span>
+                                                                    @else
+                                                                      <span class="badge badge-primary">Profile Picture Missing</span>
+                                                                    @endif
+                                                                   <span class="badge badge-success">Profile Update Must</span>
+                                                                   @else
+                                                                   <span class="badge badge-danger">Pending</span>
+                                                                   @endif
+                                                                </th>
+                                                            </tr> --}}
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -116,7 +117,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <h5>Address </h5>
+                                        {{-- <h5>Address</h5>
                                         <div style='border:1px solid #ddd;padding:0 10px;border-radius:5px '>
                                             <div class="row">
                                                 <div class="col-lg-12">
@@ -178,7 +179,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="row">
                                             <div class="col-lg-12 text-right ">

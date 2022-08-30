@@ -18,7 +18,7 @@
 
 
 
-      {{-- SSL Commerz Popup Sandbox Script --}}
+      {{-- SSL Commerz  Sandbox Script --}}
 
       <script>
         (function (window, document) {
@@ -31,4 +31,4 @@
             window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
         })(window, document);
     </script>
-      {{-- SSL Commerz Popup Sandbox Script --}}
+      {{-- SSL Commerz  Sandbox Script --}}

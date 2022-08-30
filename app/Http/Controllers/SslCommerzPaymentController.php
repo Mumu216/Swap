@@ -182,7 +182,7 @@ class SslCommerzPaymentController extends Controller
         #Check order status in order tabel against the transaction id or order id.
         $order_detials = DB::table('orders')
             ->where('transaction_id', $tran_id)
-            ->select('transaction_id', 'status', 'currency', 'amount')->first();
+            ->select('id','transaction_id', 'status', 'currency', 'amount')->first();
 
              // dd($order_detials->id); exit();
              foreach( Cart::totalCarts() as $cart ){

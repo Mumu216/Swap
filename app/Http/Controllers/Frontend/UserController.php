@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -18,7 +22,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.user.profile');
+        $divisions = Division::orderby('name','asc')->where('status',1)->get();
+        $districts = District::orderby('district_name','asc')->where('status',1)->get();
+        $orders = Order::orderby('id','desc')->where('user_id', Auth::id())->get();
+        $carts = Cart::orderby('id','desc')->get();
+        return view('frontend.pages.user.profile',compact('divisions','orders','districts','carts'));
+
     }
 
     /**

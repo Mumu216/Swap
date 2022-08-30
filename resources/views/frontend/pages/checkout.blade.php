@@ -29,12 +29,14 @@
                 <div class="checkout">
                     <div class="container">
                         <div class="checkout-discount">
-                            <form action="{{  route('make_payment')  }}"  method="POST" class="needs-validation">
+                            <form action="#">
+                                @csrf
                                 <input type="text" class="form-control" required id="checkout-discount-input">
                                 <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                             </form>
                         </div><!-- End .checkout-discount -->
-                        <form action="#">
+                        <form action="{{  route('make_payment')}}"  method="POST" class="needs-validation" id="frmShippingAddress">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-9">
                                     <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
@@ -68,21 +70,43 @@
                                                <div class="form-row">
 													<div class="form-group col">
 														<label class="font-weight-bold text-dark text-2">Shipping Address [Flat No, House No, Road No etc] </label>
-														<input type="text" value="" name="address" class="form-control">
+														<input type="text" value="@if(Auth::check()) {{ Auth::user()->address }}@endif" name="address" class="form-control">
 													</div>
 												</div>
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-lg-6">
+														<label class="font-weight-bold text-dark text-2">Division</label>
+														 <select class="form-control" name="division_id"  id="division_id">
+                                                          <option>Please Select Your Division</option>
+                                                          @foreach($divisions as $division)
+                                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                                          @endforeach
+                                                        </select>
+													</div>
+
+                                                    <div class="form-group col-lg-6">
+														<label class="font-weight-bold text-dark text-2">District</label>
+														 <select class="form-control" name="district_id" id="district_names">
+                                                           <option>Please Select Your District</option>
+                                                           @foreach( $districts as $district)
+                                                             <option value="{{ $district->id }}">{{ $district->district_name}}</option>
+                                                           @endforeach
+                                                        </select>
+													</div>
+                                                </div>
 
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>State / Country *</label>
-                                                <input type="text" class="form-control" name="country" value="" required>
+                                                <input type="text" class="form-control" name="country" value="@if(Auth::check()) {{ Auth::user()->country }}@endif" required>
                                             </div><!-- End .col-sm-6 -->
                                         </div><!-- End .row -->
 
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label>Postcode / ZIP *</label>
-                                                <input type="text" class="form-control" name="post_code" required>
+                                                <input type="text" class="form-control" name="post_code" value="@if(Auth::check()) {{ Auth::user()->zip_code }}@endif" required>
                                             </div><!-- End .col-sm-6 -->
 
 
@@ -96,6 +120,9 @@
                                         </div><!-- End .custom-checkbox -->
 
                                         <div class="custom-control custom-checkbox">
+                                            @if(Auth::check())
+                                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}" >
+                                            @endif
                                             <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
                                             <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
                                         </div><!-- End .custom-checkbox -->
@@ -116,18 +143,22 @@
                                             </thead>
 
                                             <tbody>
+                                                {{-- @foreach($carts as $cart)
                                                 <tr>
-                                                    <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                                                    <td>$84.00</td>
+                                                    <td><a href="#">{{ $cart->product->name }}</a></td>
+                                                    <td>${{ $cart->unit_price }}</td>
                                                 </tr>
+                                                @endforeach --}}
+                                                {{-- @foreach($carts as $cart)
+                                                <tr>
+                                                    <td><a href="#">{{ $cart->product->name }}</a></td>
+                                                    <td>{{ $cart->unit_price }}</td>
+                                                </tr>
+                                                @endforeach --}}
 
-                                                <tr>
-                                                    <td><a href="#">Blue utility pinafore denimdress</a></td>
-                                                    <td>$76,00</td>
-                                                </tr>
                                                 <tr class="summary-subtotal">
                                                     <td>Subtotal:</td>
-                                                    <td>$160.00</td>
+                                                    <td>${{ App\Models\Cart::totalPrice() }}</td>
                                                 </tr><!-- End .summary-subtotal -->
                                                 <tr>
                                                     <td>Shipping:</td>
@@ -135,7 +166,7 @@
                                                 </tr>
                                                 <tr class="summary-total">
                                                     <td>Total:</td>
-                                                    <td>$160.00</td>
+                                                    <td>${{ App\Models\Cart::totalPrice() }}</td>
                                                 </tr><!-- End .summary-total -->
                                             </tbody>
                                         </table><!-- End .table table-summary -->
@@ -216,8 +247,8 @@
                                             </div><!-- End .card -->
                                         </div><!-- End .accordion -->
 
-										<input type="hidden" name='amount' value="{{App\Models\Cart::totalPrice()}}">
-                                        <button type="submit"  class="btn btn-outline-primary-2 btn-order btn-block">
+										<input type="hidden" name="amount" value="{{App\Models\Cart::totalPrice()}}">
+                                          <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
                                             <span class="btn-text">Place Order</span>
                                             <span class="btn-hover-text">Proceed to Checkout</span>
                                         </button>

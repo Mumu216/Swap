@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Frontend;
 use App\Models\Brand;
 use App\Models\Category;
@@ -29,7 +30,7 @@ class PagesController extends Controller
         return view('frontend.pages.wishlist');
     }
 
-     /**
+    /**
      * Display a listing of the All Products.
      *
      * @return \Illuminate\Http\Response
@@ -37,43 +38,39 @@ class PagesController extends Controller
     public function allProducts()
     {
 
-        $products = Product::orderBy('id', 'desc')->where('status' , 1)->get();
-        return view('frontend.pages.allProducts' , compact('products'));
+        $products = Product::orderBy('id', 'desc')->where('status', 1)->get();
+        return view('frontend.pages.allProducts', compact('products'));
     }
 
-     /**
+    /**
      * Display a listing of the Product Details.
      *
      * @return \Illuminate\Http\Response
      */
     public function productDetails($slug)
     {
-        $productDetails = Product::where('slug' , $slug)->first();
-        if(!is_null ($productDetails))
-        {
+        $productDetails = Product::where('slug', $slug)->first();
+        if (!is_null($productDetails)) {
             return view('frontend.pages.details', compact('productDetails'));
-        }
-        else{
-              return redirect()->back();
+        } else {
+            return redirect()->back();
         }
     }
 
 
 
-     /**
+    /**
      * Display a listing of the Sub Category listing product
      *
      * @return \Illuminate\Http\Response
      */
     public function category($slug)
     {
-        $category = Category::where('slug' , $slug)->first();
-        if(!is_null ($category))
-        {
+        $category = Category::where('slug', $slug)->first();
+        if (!is_null($category)) {
             return view('frontend.pages.category', compact('category'));
-        }
-        else{
-              return redirect()->back();
+        } else {
+            return redirect()->back();
         }
     }
 
@@ -85,29 +82,28 @@ class PagesController extends Controller
     public function pcategory($id)
     {
         $pcategory = Category::find($id);
-        if(!is_null ($pcategory))
-        {
+        if (!is_null($pcategory)) {
             return view('frontend.pages.primarycategory', compact('pcategory'));
-        }
-        else{
-              return redirect()->back();
+        } else {
+            return redirect()->back();
         }
     }
 
-      // Product Search Function
-      public function search(Request $request){
+    // Product Search Function
+    public function search(Request $request)
+    {
         $search = $request->search;
-        $products = Product::orderby('id','desc')->where('title',"LIKE", '%'. $search . "%");
+        $products = Product::orderby('id', 'desc')->where('title', "LIKE", '%' . $search . "%");
 
-        if( $request->category != "ALL"){
+        if ($request->category != "ALL") {
             $products->where('cat_id', $request->category);
         };
         $products = $products->get();
-        return view('frontend.pages.search',compact('search' ,'products'));
+        return view('frontend.pages.search', compact('search', 'products'));
     }
 
 
-     /**
+    /**
      * Display a listing of the cart page.
      *
      * @return \Illuminate\Http\Response
@@ -118,14 +114,17 @@ class PagesController extends Controller
     }
 
 
-     /**
+    /**
      * Display a listing of the checkout page.
      *
      * @return \Illuminate\Http\Response
      */
     public function checkout()
     {
-        return view('frontend.pages.checkout');
+        $cartItems = Cart::orderBy('id', 'desc')->where('order_id', NULL)->get();
+        $districts = District::orderBy('district_name', 'asc')->get();
+        $divisions = Division::orderBy('priority', 'asc')->get();
+        return view('frontend.pages.checkout', compact('cartItems', 'districts', 'divisions'));
     }
 
     /**
@@ -137,7 +136,6 @@ class PagesController extends Controller
     public function login()
     {
         return view('frontend.pages.login');
-
     }
 
     /**

@@ -37,7 +37,27 @@ ul.nav-list li a {
     line-height: 20px;
 }
 
- 
+/* Order Details page */
+.order-summery-box{
+    border: 1px solid #eee;
+    padding: 15px;
+    min-height: 185px;
+
+}
+.order-summery-box p{
+    margin : 0;
+    line-height: 1.8em;
+}
+.order-summery-box p span{
+    width: 115px;
+    display: inline-block;
+    color: #000;
+}
+.order-summery-box .badge{
+    border-radius: 5px;
+
+
+
 /* .cart-update-btn{
     margin-top: 10px;
     padding: 10px 10px !important;

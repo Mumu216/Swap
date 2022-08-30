@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('currency')->nullable();
             $table->integer('is_paid')->default(0)->comment('0=COD , 1=SSL');
             $table->integer('status')->default(0)->comment('0=processing , 1=hold, 2=successful , 3=canceled');
+            $table->text('admin_note')->nullable();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('order_id')->nullable();
-            // $table->unsignedInteger('unit_price')->nullable();
+            $table->unsignedInteger('unit_price')->nullable();
             $table->unsignedInteger('quantity')->default(1);
             $table->string('ip_address')->nullable();
             $table->timestamps();

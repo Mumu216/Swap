@@ -59,6 +59,8 @@ class CartController extends Controller
             }
             $cart->ip_address    =$request->ip();
             $cart->product_id    =$request->product_id;
+            $cart->quantity     = $request->quantity;
+            $cart->unit_price   = $request->unit_price;
             $cart->save();
         }
 

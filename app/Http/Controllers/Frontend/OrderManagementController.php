@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use App\Models\User;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\models\District;
+use App\models\Division;
+use App\Models\Cart;
+use App\Models\Order;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Auth;
 use File;
 
@@ -18,7 +27,14 @@ class OrderManagementController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.user.orderhistory');
+        if(Auth::check()){
+            $cusID = Auth::user()->id;
+            $orders = Order::orderBy('id','desc')->where('user_id' , $cusID)->get();
+            return view('frontend.pages.user.orderhistory' , compact('orders'));
+        }
+        else{
+           return view('frontend.pages.customer.404');
+        }
     }
 
     /**

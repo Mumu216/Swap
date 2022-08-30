@@ -40,7 +40,7 @@
 
                                             @if( Auth::check())
                                             @if( !is_null(Auth::user()->image) )
-                                            <img src="{{ asset('backend/img/users/')}} / {{ Auth::user()->image }}" alt="User Image" class="user-avater">
+                                            <img src="{{ asset('backend/img/users/')}}/{{ Auth::user()->image }}" alt="User Image" class="user-avater">
                                           @else
                                            <img src="{{ asset('backend/img/users/images1.jpg') }}" class="user-avater" alt="English" />
                                          @endif
